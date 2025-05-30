@@ -1,0 +1,28 @@
+<?php
+
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SchoolYearController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::middleware('guest')->group(function () {
+    Route::prefix('login')->group(function () {
+        Route::get('/', [LoginController::class, 'index'])->name('login');
+        Route::post('/store', [LoginController::class, 'store'])->name('login.store');
+    });
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('school-year')->group(function () {
+        Route::get('/', [SchoolYearController::class, 'index'])->name('school-year.index');
+        Route::post('/datatable', [SchoolYearController::class, 'datatable']);
+        Route::post('/store', [SchoolYearController::class, 'store'])->name('school-year.store');
+        Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update']);
+    });
+});
