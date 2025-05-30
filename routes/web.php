@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [SchoolYearController::class, 'index'])->name('school-year.index');
         Route::post('/datatable', [SchoolYearController::class, 'datatable']);
         Route::post('/store', [SchoolYearController::class, 'store'])->name('school-year.store');
-        Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update']);
+        Route::get('/{schoolYear:slug}/show', [SchoolYearController::class, 'show'])->name('school-year.show');
+        Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update'])->name('school-year.update');
     });
 });

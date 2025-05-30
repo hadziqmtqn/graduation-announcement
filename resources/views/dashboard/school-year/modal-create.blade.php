@@ -18,11 +18,11 @@
                             <label for="last_year">Tahun Akhir</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="announcement_start_date" id="announcement_start_date" class="form-control bs-datepicker" value="{{ old('announcement_start_date') }}" placeholder="Tanggal Mulai Pengumuman" readonly>
+                            <input type="datetime-local" name="announcement_start_date" id="announcement_start_date" class="form-control" value="{{ old('announcement_start_date') }}" placeholder="Tanggal Mulai Pengumuman">
                             <label for="announcement_start_date">Tanggal Mulai Pengumuman</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="announcement_end_date" class="form-control bs-datepicker" id="announcement_end_date" value="{{ old('announcement_end_date') }}" placeholder="Tanggal Akhir Pengumuman" readonly>
+                            <input type="datetime-local" name="announcement_end_date" class="form-control" id="announcement_end_date" value="{{ old('announcement_end_date') }}" placeholder="Tanggal Akhir Pengumuman">
                             <label for="announcement_end_date">Tanggal Akhir Pengumuman</label>
                         </div>
                         <div class="mb-3">

@@ -17,7 +17,6 @@
             </table>
         </div>
     </div>
-    @include('dashboard.school-year.modal-edit')
     @include('dashboard.school-year.modal-create')
 @endsection
 
