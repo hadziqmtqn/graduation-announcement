@@ -13,6 +13,12 @@
                     <div data-i18n="Tahun Ajaran">Tahun Ajaran</div>
                 </a>
             </li>
+            <li class="menu-item {{ url()->current() == route('student.index') ? 'active' : '' }}">
+                <a href="{{ route('student.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons mdi mdi-account-multiple-outline"></i>
+                    <div data-i18n="Siswa">Siswa</div>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

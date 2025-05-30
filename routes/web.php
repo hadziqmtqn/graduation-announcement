@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,5 +26,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [SchoolYearController::class, 'store'])->name('school-year.store');
         Route::get('/{schoolYear:slug}/show', [SchoolYearController::class, 'show'])->name('school-year.show');
         Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update'])->name('school-year.update');
+    });
+
+    Route::prefix('student')->group(function () {
+        Route::get('/', [StudentController::class, 'index'])->name('student.index');
+        Route::post('/datatable', [StudentController::class, 'datatable']);
+        Route::post('/store', [StudentController::class, 'store'])->name('student.store');
+        Route::get('/{student:username}/show', [StudentController::class, 'show'])->name('student.show');
+        Route::put('/{student:username}/update', [StudentController::class, 'update']);
     });
 });
