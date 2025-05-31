@@ -25,11 +25,21 @@
                     <div data-i18n="Mata Pelajaran">Mata Pelajaran</div>
                 </a>
             </li>
-            <li class="menu-item {{ url()->current() == route('test-score.index') ? 'active' : '' }}">
-                <a href="{{ route('test-score.index') }}" class="menu-link">
+            <li class="menu-item {{ $title == 'Nilai Ujian' ? 'active' : '' }}">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons mdi mdi-counter"></i>
                     <div data-i18n="Nilai Ujian">Nilai Ujian</div>
                 </a>
+                @foreach($getAllSchoolYears as $getAllSchoolYear)
+                <ul class="menu-sub">
+                    <li class="menu-item {{ url()->current() == route('test-score.index', $getAllSchoolYear->slug) ? 'active' : '' }}">
+                        <a href="{{ route('test-score.index', $getAllSchoolYear->slug) }}" class="menu-link">
+                            <i class="menu-icon tf-icons mdi mdi-calendar-outline"></i>
+                            <div data-i18n="TA. {{ $getAllSchoolYear->first_year . '/' . $getAllSchoolYear->last_year }}">TA. {{ $getAllSchoolYear->first_year . '/' . $getAllSchoolYear->last_year }}</div>
+                        </a>
+                    </li>
+                </ul>
+                @endforeach
             </li>
         </ul>
     </div>

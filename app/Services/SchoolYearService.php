@@ -57,4 +57,9 @@ class SchoolYearService
             ];
         }), null, Response::HTTP_OK);
     }
+
+    public function all(): Collection
+    {
+        return $this->schoolYear->get();
+    }
 }

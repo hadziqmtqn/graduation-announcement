@@ -51,8 +51,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::prefix('test-score')->group(function () {
-        Route::get('/', [TestScoreController::class, 'index'])->name('test-score.index');
-        Route::get('/{schoolYear:slug}', [TestScoreController::class, 'create'])->name('test-score.create');
+        Route::get('/{schoolYear:slug}', [TestScoreController::class, 'index'])->name('test-score.index');
         Route::post('/{schoolYear:slug}', [TestScoreController::class, 'store'])->name('test-score.store');
     });
 });

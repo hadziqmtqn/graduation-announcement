@@ -20,5 +20,6 @@ class AppViewComposer
     public function compose(View $view): void
     {
         $view->with('schoolYearActive', $this->schoolYearService->getData());
+        $view->with('getAllSchoolYears', $this->schoolYearService->all());
     }
 }

@@ -16,20 +16,14 @@ use Illuminate\View\View;
 
 class TestScoreController extends Controller
 {
-    public function index(): View
+    public function index(SchoolYear $schoolYear): View
     {
         $title = 'Nilai Ujian';
 
-        return \view('dashboard.test-score.index', compact('title'));
-    }
-
-    public function create(SchoolYear $schoolYear): View
-    {
-        $title = 'Tambah Nilai Ujian';
-
         // Ambil semua siswa
         $schoolYear->load([
-            'students' => fn($query) => $query->orderBy('exam_number')
+            'students' => fn($query) => $query->orderBy('exam_number'),
+            'students.testScore'
         ]);
 
         $students = $schoolYear->students;
@@ -58,6 +52,7 @@ class TestScoreController extends Controller
                 'studentId' => $student->id,
                 'examNumber' => $student->exam_number,
                 'fullName' => $student->full_name,
+                'avgScore' => number_format($student->testScore?->avg_score, 2),
                 'scores' => $courses->map(function (Course $course) use ($student, $detailMap) {
                     $key = "$student->id:$course->id";
                     return [
@@ -69,7 +64,7 @@ class TestScoreController extends Controller
             ]);
         });
 
-        return view('dashboard.test-score.create', compact('title', 'schoolYear', 'courses', 'testScores'));
+        return view('dashboard.test-score.index', compact('title', 'schoolYear', 'courses', 'testScores'));
     }
 
     public function store(TestScoreRequest $request, SchoolYear $schoolYear): RedirectResponse
@@ -89,24 +84,5 @@ class TestScoreController extends Controller
         }
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
-    }
-
-    public function show(TestScore $testScore)
-    {
-        return $testScore;
-    }
-
-    public function update(TestScoreRequest $request, TestScore $testScore)
-    {
-        $testScore->update($request->validated());
-
-        return $testScore;
-    }
-
-    public function destroy(TestScore $testScore)
-    {
-        $testScore->delete();
-
-        return response()->json();
     }
 }
