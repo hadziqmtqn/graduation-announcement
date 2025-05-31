@@ -34,6 +34,7 @@ class StudentController extends Controller
             if ($request->ajax()) {
                 $data = Student::query()
                     ->with('schoolYear')
+                    ->search($request)
                     ->orderByDesc('created_at');
 
                 return DataTables::eloquent($data)

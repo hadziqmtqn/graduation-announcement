@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Sluggable\HasSlug;
@@ -43,5 +45,16 @@ class Student extends Model
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class);
+    }
+
+    // TODO Scope
+    #[Scope]
+    protected function search(Builder $query, $request): Builder
+    {
+        $search = $request['search'] ?? null;
+        $schoolYearId = $request['school_year_id'] ?? null;
+
+        return $query->when($search, fn($query) => $query->whereLike('full_name', 'like', '%' . $search . '%'))
+            ->where('school_year_id', $schoolYearId);
     }
 }

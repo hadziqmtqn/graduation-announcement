@@ -68,4 +68,12 @@ class SchoolYear extends Model
     {
         return $query->where('is_active', true);
     }
+
+    #[Scope]
+    protected function search(Builder $query, $request): Builder
+    {
+        $search = $request['search'] ?? null;
+
+        return $query->when($search, fn($query) => $query->whereAny(['first_year', 'last_year'], 'like', '%' . $search . '%'));
+    }
 }

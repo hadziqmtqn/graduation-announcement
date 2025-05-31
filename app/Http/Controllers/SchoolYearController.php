@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SchoolYear\SchoolYearRequest;
 use App\Models\SchoolYear;
+use App\Services\SchoolYearService;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -15,6 +16,16 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SchoolYearController extends Controller
 {
+    protected SchoolYearService $schoolYearService;
+
+    /**
+     * @param SchoolYearService $schoolYearService
+     */
+    public function __construct(SchoolYearService $schoolYearService)
+    {
+        $this->schoolYearService = $schoolYearService;
+    }
+
     public function index(): View
     {
         $title = 'Tahun Ajaran';
@@ -94,5 +105,10 @@ class SchoolYearController extends Controller
         }
 
         return redirect()->back()->with('success', 'Data berhasil disimpan!');
+    }
+
+    public function select(Request $request)
+    {
+        return $this->schoolYearService->select($request);
     }
 }

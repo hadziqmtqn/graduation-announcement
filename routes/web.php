@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/{schoolYear:slug}/update', [SchoolYearController::class, 'update'])->name('school-year.update');
     });
 
+    Route::get('select-school-year', [SchoolYearController::class, 'select']);
+
     Route::prefix('student')->group(function () {
         Route::get('/', [StudentController::class, 'index'])->name('student.index');
         Route::post('/datatable', [StudentController::class, 'datatable']);

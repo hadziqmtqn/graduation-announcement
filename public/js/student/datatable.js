@@ -1,5 +1,6 @@
 $(function () {
     const table = '#datatable';
+    const schoolYear = $('#select-school-year');
 
     const dataTable = $(table).DataTable({
         processing: true,
@@ -15,6 +16,7 @@ $(function () {
             },
             data: function (d) {
                 d.search = $(table + '_filter ' + 'input[type="search"]').val();
+                d.school_year_id = schoolYear.val();
             }
         },
         columns: [
@@ -58,6 +60,14 @@ $(function () {
         dataTable.ajax.reload();
         dataTable.page(currentPage).draw('page');
     }
+
+    $('.filter').on('change', function () {
+        dataTable.ajax.params({
+            school_year_id: schoolYear.val(),
+        });
+
+        dataTable.ajax.reload();
+    });
 
     $('#modalEdit').on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget);
