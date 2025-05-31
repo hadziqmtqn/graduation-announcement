@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [StudentController::class, 'index'])->name('student.index');
         Route::post('/datatable', [StudentController::class, 'datatable']);
         Route::post('/store', [StudentController::class, 'store'])->name('student.store');
+        Route::post('/import', [StudentController::class, 'import'])->name('student.import');
         Route::get('/{student:username}/show', [StudentController::class, 'show'])->name('student.show');
         Route::put('/{student:username}/update', [StudentController::class, 'update']);
+        Route::delete('/{student:username}/delete', [StudentController::class, 'destroy']);
     });
 });

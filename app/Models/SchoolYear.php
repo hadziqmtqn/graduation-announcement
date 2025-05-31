@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -51,6 +52,14 @@ class SchoolYear extends Model
                     ->update(['is_active' => false]);
             }
         });
+    }
+
+    protected function year(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, array $attributes) =>
+                $attributes['first_year'] . '/' . $attributes['last_year'],
+        );
     }
 
     // TODO Scope

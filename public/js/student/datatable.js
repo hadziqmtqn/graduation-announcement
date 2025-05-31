@@ -19,6 +19,7 @@ $(function () {
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'schoolYear', name: 'schoolYear'},
             {data: 'exam_number', name: 'exam_number'},
             {data: 'full_name', name: 'full_name'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -34,11 +35,19 @@ $(function () {
             '>',
         buttons: [
             {
-                text: '<i class="mdi mdi-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Baru</span>',
-                className: 'btn btn-primary waves-effect waves-light',
+                text: '<i class="mdi mdi-plus me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Tambah Manual</span>',
+                className: 'btn btn-primary waves-effect waves-light me-2',
                 attr: {
                     'data-bs-toggle': 'modal',
                     'data-bs-target': '#modalCreate',
+                }
+            },
+            {
+                text: '<i class="mdi mdi-file-excel-box-outline me-0 me-sm-1"></i><span class="d-none d-sm-inline-block">Import Excel</span>',
+                className: 'btn btn-secondary waves-effect waves-light',
+                attr: {
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#modalImport',
                 }
             }
         ],
@@ -109,6 +118,44 @@ $(function () {
                     }
                     unBlockUi();
                 });
+        });
+    });
+
+    dataTable.off('click').on('click', '.delete', function () {
+        let username = $(this).data('username');
+        let url = '/student/' + username + '/delete';
+        let token = $('meta[name="csrf-token"]').attr('content');
+
+        Swal.fire({
+            title: 'Peringatan!',
+            text: "Apakah Anda ingin menghapus data ini?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonText: 'TIDAK',
+            confirmButtonText: 'YA, HAPUS!',
+            customClass: {
+                confirmButton: 'btn btn-danger me-3 waves-effect waves-light',
+                cancelButton: 'btn btn-label-secondary waves-effect'
+            },
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                blockUi();
+
+                axios.delete(url, {
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    }
+                }).then(function (response) {
+                    toastr.success(response.data.message);
+                    reloadTable();
+                    unBlockUi();
+                }).catch(function (error) {
+                    unBlockUi();
+                    toastr.error(error.response.data.message);
+                });
+            }
         });
     });
 });

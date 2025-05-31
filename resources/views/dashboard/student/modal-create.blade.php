@@ -4,7 +4,7 @@
             <div class="modal-body p-md-0">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <div class="text-center mb-4">
-                    <h3 class="mb-2 pb-1">Tambah {{ $title }}</h3>
+                    <h3 class="mb-2 pb-1">Tambah {{ $title }} TA. {{ $schoolYearActive['year'] }}</h3>
                 </div>
                 <form action="{{ route('student.store') }}" id="formCreate" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework" method="post">
                     @csrf

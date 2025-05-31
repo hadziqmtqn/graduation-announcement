@@ -8,6 +8,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>TA.</th>
                     <th>No. Ujian</th>
                     <th>Nama Lengkap</th>
                     <th>Opsi</th>
@@ -17,6 +18,8 @@
         </div>
     </div>
     @include('dashboard.student.modal-create')
+    @include('dashboard.student.modal-edit')
+    @include('dashboard.student.modal-import')
 @endsection
 
 @section('scripts')
