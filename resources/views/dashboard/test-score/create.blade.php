@@ -35,7 +35,7 @@
                             @foreach($testScore['scores'] as $indexScore => $score)
                                 <input type="hidden" name="course_id[]" value="{{ $score['id'] }}">
                                 <td>
-                                    <input type="number" name="score[]" class="form-control" id="score-{{ $indexScore }}" value="{{ $score['score'] }}" data-bs-toggle="tooltip" title="{{ $testScore['fullName'] }} - {{ $score['name'] }}">
+                                    <input type="number" name="score[]" class="form-control excel-cell" id="score-{{ $indexScore }}" value="{{ $score['score'] }}" data-bs-toggle="tooltip" title="{{ $testScore['fullName'] }} - {{ $score['name'] }}">
                                 </td>
                             @endforeach
                         </tr>
@@ -48,4 +48,33 @@
             </div>
         </form>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputList = Array.from(document.querySelectorAll('.excel-cell'));
+
+            inputList.forEach((input, index) => {
+                input.addEventListener('paste', function (e) {
+                    e.preventDefault();
+
+                    const clipboardData = e.clipboardData || window.clipboardData;
+                    const pastedData = clipboardData.getData('text');
+                    const rows = pastedData.trim().split('\n');
+
+                    rows.forEach((row, rowIndex) => {
+                        const cols = row.split('\t');
+
+                        cols.forEach((value, colIndex) => {
+                            const targetIndex = index + (rowIndex * {{ count($courses) }}) + colIndex;
+                            if (inputList[targetIndex]) {
+                                inputList[targetIndex].value = value.trim();
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    </script>
 @endsection
