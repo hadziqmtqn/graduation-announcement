@@ -103,19 +103,19 @@ $(function () {
                 })
                 .catch(error => {
                     if (error.response.status === 422) {
-                        const errors = error.response.data.message;
+                        const errors = error.response.data.errors; // Perubahan ada di sini
                         for (const key in errors) {
                             const input = form.querySelector(`[name="${key}"]`);
                             if (input) {
-                                // Add is-invalid class to the input field
+                                // Tambahkan kelas error
                                 input.classList.add('is-invalid');
 
-                                // Create error message element
+                                // Buat elemen pesan error
                                 const errorMessage = document.createElement('div');
                                 errorMessage.classList.add('invalid-feedback');
                                 errorMessage.innerHTML = errors[key].join('<br>');
 
-                                // Append error message after the input field
+                                // Tampilkan di bawah field input
                                 if (input.parentNode.classList.contains('form-floating')) {
                                     input.parentNode.appendChild(errorMessage);
                                 } else {
@@ -123,6 +123,10 @@ $(function () {
                                 }
                             }
                         }
+
+                        // Tampilkan ringkasan pesan error
+                        toastr.error(error.response.data.message);
+
                     } else {
                         toastr.error(error.response.data.message);
                     }

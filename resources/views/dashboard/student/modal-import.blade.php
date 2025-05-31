@@ -14,6 +14,7 @@
                                 <i class="mdi mdi-clipboard-outline mdi-24px me-2"></i>Panduan
                             </h4>
                             <ul>
+                                <li>Download template excel <a href="{{ asset('assets/siswa.xlsx') }}" class="fw-bold">Disini</a></li>
                                 <li>File yang diizinkan berupa .xls dan .xlsx, dan maksimal 200KB.</li>
                                 <li>Nama kolom tidak boleh diubah.</li>
                                 <li>
