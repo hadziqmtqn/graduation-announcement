@@ -32,6 +32,7 @@ class SchoolYearService
 
         return collect([
             'id' => $schoolYear?->id,
+            'slug' => $schoolYear?->slug,
             'year' => $schoolYear ? $schoolYear->year : null,
             'announcementStartDate' => $schoolYear ? Carbon::parse($schoolYear->announcement_start_date)->isoFormat('DD MMM Y') : null,
             'announcementEndDate' => $schoolYear ? Carbon::parse($schoolYear->announcement_end_date)->isoFormat('DD MMM Y') : null,

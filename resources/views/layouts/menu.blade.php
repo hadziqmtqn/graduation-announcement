@@ -25,6 +25,12 @@
                     <div data-i18n="Mata Pelajaran">Mata Pelajaran</div>
                 </a>
             </li>
+            <li class="menu-item {{ url()->current() == route('test-score.index') ? 'active' : '' }}">
+                <a href="{{ route('test-score.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons mdi mdi-counter"></i>
+                    <div data-i18n="Nilai Ujian">Nilai Ujian</div>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

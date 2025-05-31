@@ -23,6 +23,7 @@
                     <th>TA.</th>
                     <th>No. Ujian</th>
                     <th>Nama Lengkap</th>
+                    <th>Rata2 Nilai AM</th>
                     <th>Opsi</th>
                 </tr>
                 </thead>

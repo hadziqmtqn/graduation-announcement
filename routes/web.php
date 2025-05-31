@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TestScoreController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -47,5 +48,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/store', [CourseController::class, 'store'])->name('course.store');
         Route::put('/{course:slug}/update', [CourseController::class, 'update']);
         Route::delete('/{course:slug}/delete', [CourseController::class, 'destroy']);
+    });
+
+    Route::prefix('test-score')->group(function () {
+        Route::get('/', [TestScoreController::class, 'index'])->name('test-score.index');
+        Route::get('/{schoolYear:slug}', [TestScoreController::class, 'create'])->name('test-score.create');
+        Route::post('/{schoolYear:slug}', [TestScoreController::class, 'store'])->name('test-score.store');
     });
 });

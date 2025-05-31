@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class Course extends Model
@@ -40,5 +41,10 @@ class Course extends Model
     public function testScoreDetails(): HasMany
     {
         return $this->hasMany(TestScoreDetail::class, 'course_id');
+    }
+
+    public function testScoreDetail(): HasOne
+    {
+        return $this->hasOne(TestScoreDetail::class, 'course_id');
     }
 }

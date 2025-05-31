@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class SchoolYear extends Model
@@ -57,9 +58,13 @@ class SchoolYear extends Model
     protected function year(): Attribute
     {
         return Attribute::make(
-            get: fn($value, array $attributes) =>
-                $attributes['first_year'] . '/' . $attributes['last_year'],
+            get: fn($value, array $attributes) => $attributes['first_year'] . '/' . $attributes['last_year'],
         );
+    }
+
+    public function students(): HasMany
+    {
+        return $this->hasMany(Student::class, 'school_year_id');
     }
 
     // TODO Scope

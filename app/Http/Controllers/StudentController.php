@@ -33,7 +33,7 @@ class StudentController extends Controller
         try {
             if ($request->ajax()) {
                 $data = Student::query()
-                    ->with('schoolYear')
+                    ->with(['schoolYear', 'testScore'])
                     ->search($request)
                     ->orderByDesc('created_at');
 
@@ -47,6 +47,7 @@ class StudentController extends Controller
                         });
                     })
                     ->addColumn('schoolYear', fn($row) => $row->schoolYear?->year)
+                    ->addColumn('testScoreAvg', fn($row) => $row->testScore?->avg_score ?? '-')
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="'. route('student.show', $row->username) .'" class="btn btn-icon btn-sm btn-primary"><i class="mdi mdi-eye"></i></a> ';
                         $btn .= '<button type="button" data-username="'. $row->username .'" data-full-name="'. $row->full_name .'" data-exam-number="'. $row->exam_number .'" class="btn btn-icon btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit"><i class="mdi mdi-pencil"></i></button> ';

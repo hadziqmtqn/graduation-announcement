@@ -24,6 +24,7 @@ $(function () {
             {data: 'schoolYear', name: 'schoolYear'},
             {data: 'exam_number', name: 'exam_number'},
             {data: 'full_name', name: 'full_name'},
+            {data: 'testScoreAvg', name: 'testScoreAvg', orderable: false, searchable: false},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ],
         dom:

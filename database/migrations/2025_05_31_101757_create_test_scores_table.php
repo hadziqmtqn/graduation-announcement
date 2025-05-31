@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('school_year_id');
             $table->unsignedBigInteger('student_id');
             $table->integer('rank')->nullable();
-            $table->float('avg_score');
+            $table->float('avg_score')->default(0);
             $table->timestamps();
 
             $table->foreign('school_year_id')->references('id')->on('school_years')->restrictOnDelete();
