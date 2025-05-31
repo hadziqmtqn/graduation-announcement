@@ -21,20 +21,14 @@ class CreateTestScoreJob implements ShouldQueue
 
     protected SchoolYear $schoolYear;
     protected Student $student;
-    protected array $courses;
-    protected array $score;
+    protected int $courseId;
+    protected mixed $score;
 
-    /**
-     * @param SchoolYear $schoolYear
-     * @param Student $student
-     * @param array $courses
-     * @param array $score
-     */
-    public function __construct(SchoolYear $schoolYear, Student $student, array $courses, array $score)
+    public function __construct(SchoolYear $schoolYear, Student $student, int $courseId, mixed $score)
     {
         $this->schoolYear = $schoolYear;
         $this->student = $student;
-        $this->courses = $courses;
+        $this->courseId = $courseId;
         $this->score = $score;
     }
 
@@ -57,19 +51,17 @@ class CreateTestScoreJob implements ShouldQueue
             $testScore->avg_score = 0;
             $testScore->save();
 
-            foreach ($this->courses as $key => $course) {
-                $testScoreDetail = TestScoreDetail::filterData([
-                    'test_score_id' => $testScore->id,
-                    'course_id' => $course
-                ])
-                    ->lockForUpdate()
-                    ->firstOrNew();
+            $testScoreDetail = TestScoreDetail::filterData([
+                'test_score_id' => $testScore->id,
+                'course_id' => $this->courseId
+            ])
+                ->lockForUpdate()
+                ->firstOrNew();
 
-                $testScoreDetail->test_score_id = $testScore->id;
-                $testScoreDetail->course_id = $course;
-                $testScoreDetail->score = $this->score[$key];
-                $testScoreDetail->save();
-            }
+            $testScoreDetail->test_score_id = $testScore->id;
+            $testScoreDetail->course_id = $this->courseId;
+            $testScoreDetail->score = $this->score;
+            $testScoreDetail->save();
 
             $testScore->avg_score = $testScore->testScoreDetails()->avg('score');
             $testScore->save();

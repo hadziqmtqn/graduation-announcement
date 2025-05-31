@@ -27,15 +27,14 @@
                     </thead>
                     <tbody>
                     @foreach($testScores as $key => $testScore)
-                        <input type="hidden" name="student_id[]" id="student-{{ $key }}" value="{{ $testScore['studentId'] }}">
                         <tr>
+                            <input type="hidden" name="student_id[]" id="student-{{ $key }}" value="{{ $testScore['studentId'] }}">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $testScore['examNumber'] }}</td>
                             <td>{{ $testScore['fullName'] }}</td>
                             @foreach($testScore['scores'] as $indexScore => $score)
-                                <input type="hidden" name="course_id[]" value="{{ $score['id'] }}">
                                 <td>
-                                    <input type="number" name="score[]" class="form-control excel-cell" id="score-{{ $indexScore }}" value="{{ $score['score'] }}" data-bs-toggle="tooltip" title="{{ $testScore['fullName'] }} - {{ $score['name'] }}">
+                                    <input type="number" name="score[{{ $testScore['studentId'] }}][{{ $score['id'] }}]" class="form-control excel-cell" value="{{ $score['score'] }}" data-bs-toggle="tooltip" title="{{ $testScore['fullName'] }} - {{ $score['name'] }}">
                                 </td>
                             @endforeach
                         </tr>

@@ -11,10 +11,9 @@ class TestScoreRequest extends FormRequest
         return [
             'student_id' => ['required', 'array'],
             'student_id.*' => ['required', 'integer', 'exists:students,id'],
-            'course_id' => ['required', 'array'],
-            'course_id.*' => ['required', 'integer', 'exists:courses,id'],
             'score' => ['required', 'array'],
-            'score.*' => ['required']
+            'score.*' => ['array'], // tiap siswa harus array skor
+            'score.*.*' => ['nullable', 'numeric'], // nilai skor bisa null atau angka
         ];
     }
 
@@ -28,10 +27,9 @@ class TestScoreRequest extends FormRequest
         return [
             'student_id' => 'siswa',
             'student_id.*' => 'siswa',
-            'course_id' => 'mata pelajaran',
-            'course_id.*' => 'mata pelajaran',
             'score' => 'nilai',
-            'score.*' => 'nilai'
+            'score.*' => 'nilai',
+            'score.*.*' => 'nilai'
         ];
     }
 }

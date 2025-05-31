@@ -35,7 +35,8 @@ class TestScoreController extends Controller
         $students = $schoolYear->students;
 
         // Ambil semua course
-        $courses = Course::all();
+        $courses = Course::active()
+            ->get();
 
         // Ambil semua testScoreDetail yang cocok untuk tahun ajaran ini
         $testScoreDetails = TestScoreDetail::with(['course', 'testScore'])
@@ -74,11 +75,13 @@ class TestScoreController extends Controller
     public function store(TestScoreRequest $request, SchoolYear $schoolYear): RedirectResponse
     {
         try {
-            $students = Student::whereIn('id', $request->input('student_id', []))
-                ->get();
+            $scores = $request->input('score', []); // ['student_id' => ['course_id' => score]]
+            foreach ($scores as $studentId => $scorePerCourse) {
+                $student = Student::findOrFail($studentId);
 
-            foreach ($students as $student) {
-                CreateTestScoreJob::dispatch($schoolYear, $student, $request->input('course_id', []), $request->input('score', []));
+                foreach ($scorePerCourse as $courseId => $score) {
+                    CreateTestScoreJob::dispatch($schoolYear, $student, $courseId, $score);
+                }
             }
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
