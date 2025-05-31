@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\SchoolYear;
 use App\Models\Student;
 use App\Models\TestScore;
+use App\Models\TestScoreDetail;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
@@ -25,18 +26,49 @@ class TestScoreController extends Controller
     public function create(SchoolYear $schoolYear): View
     {
         $title = 'Tambah Nilai Ujian';
-        $schoolYear->load('students');
-        $courses = Course::with([
-            'testScoreDetails' => function ($query) use ($schoolYear) {
-                $query->whereHas('testScore', function ($query) use ($schoolYear) {
-                    $query->schoolYearId($schoolYear->id)
-                        ->whereIn('student_id', $schoolYear->students->pluck('id')->toArray());
-                });
-            }
-        ])
+
+        // Ambil semua siswa
+        $schoolYear->load([
+            'students' => fn($query) => $query->orderBy('exam_number')
+        ]);
+
+        $students = $schoolYear->students;
+
+        // Ambil semua course
+        $courses = Course::all();
+
+        // Ambil semua testScoreDetail yang cocok untuk tahun ajaran ini
+        $testScoreDetails = TestScoreDetail::with(['course', 'testScore'])
+            ->whereHas('testScore', function ($query) use ($schoolYear) {
+                $query->schoolYearId($schoolYear->id);
+            })
             ->get();
 
-        return \view('dashboard.test-score.create', compact('title', 'schoolYear', 'courses'));
+        // Kelompokkan detail berdasarkan student_id dan course_id
+        $detailMap = $testScoreDetails->mapWithKeys(function ($detail) {
+            $studentId = $detail->testScore->student_id;
+            $courseId = $detail->course_id;
+            return ["$studentId:$courseId" => $detail->score];
+        });
+
+        // Siapkan testScores per student
+        $testScores = $students->map(function (Student $student) use ($courses, $detailMap) {
+            return collect([
+                'studentId' => $student->id,
+                'examNumber' => $student->exam_number,
+                'fullName' => $student->full_name,
+                'scores' => $courses->map(function (Course $course) use ($student, $detailMap) {
+                    $key = "$student->id:$course->id";
+                    return [
+                        'id' => $course->id,
+                        'name' => $course->name,
+                        'score' => $detailMap[$key] ?? null,
+                    ];
+                })
+            ]);
+        });
+
+        return view('dashboard.test-score.create', compact('title', 'schoolYear', 'courses', 'testScores'));
     }
 
     public function store(TestScoreRequest $request, SchoolYear $schoolYear): RedirectResponse
