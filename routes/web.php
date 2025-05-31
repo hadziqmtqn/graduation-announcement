@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SchoolYearController;
@@ -38,5 +39,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/{student:username}/show', [StudentController::class, 'show'])->name('student.show');
         Route::put('/{student:username}/update', [StudentController::class, 'update']);
         Route::delete('/{student:username}/delete', [StudentController::class, 'destroy']);
+    });
+
+    Route::prefix('course')->group(function () {
+        Route::get('/', [CourseController::class, 'index'])->name('course.index');
+        Route::post('/datatable', [CourseController::class, 'datatable']);
+        Route::post('/store', [CourseController::class, 'store'])->name('course.store');
+        Route::put('/{course:slug}/update', [CourseController::class, 'update']);
+        Route::delete('/{course:slug}/delete', [CourseController::class, 'destroy']);
     });
 });

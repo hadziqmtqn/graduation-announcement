@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TestScoreRequest;
+use App\Http\Requests\TestScore\TestScoreRequest;
 use App\Models\TestScore;
 
 class TestScoreController extends Controller

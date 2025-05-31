@@ -19,6 +19,12 @@
                     <div data-i18n="Siswa">Siswa</div>
                 </a>
             </li>
+            <li class="menu-item {{ url()->current() == route('course.index') ? 'active' : '' }}">
+                <a href="{{ route('course.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons mdi mdi-clipboard-text-outline"></i>
+                    <div data-i18n="Mata Pelajaran">Mata Pelajaran</div>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

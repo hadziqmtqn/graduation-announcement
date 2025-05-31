@@ -9,12 +9,21 @@
                 <form onsubmit="return false" id="formEdit" class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework">
                     <div class="col-12 fv-plugins-icon-container">
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="full_name" id="editFullName" class="form-control" placeholder="Nama Lengkap">
-                            <label for="editFullName">Nama Lengkap</label>
+                            <input type="text" name="code" id="editCode" class="form-control" placeholder="Kode">
+                            <label for="editCode">Kode</label>
                         </div>
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" name="exam_number" id="editExamNumber" class="form-control" placeholder="Nomor Ujian">
-                            <label for="editExamNumber">Nomor Ujian</label>
+                            <input type="text" name="name" id="editName" class="form-control" placeholder="Nama">
+                            <label for="editName">Nama</label>
+                        </div>
+                        <div class="mb-2">Status</div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="is_active" id="activeSchedule" value="1">
+                            <label class="form-check-label" for="activeSchedule">Aktif</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="is_active" id="notActiveSchedule" value="0">
+                            <label class="form-check-label" for="notActiveSchedule">Tidak Aktif</label>
                         </div>
                     </div>
                     <div class="col-12 text-center">

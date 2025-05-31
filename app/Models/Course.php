@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Course extends Model
@@ -28,6 +29,16 @@ class Course extends Model
 
         static::creating(function (Course $course) {
             $course->slug = Str::uuid()->toString();
+            $course->code = strtoupper(Str::slug($course->code));
         });
+
+        static::updating(function (Course $course) {
+            $course->code = strtoupper(Str::slug($course->code));
+        });
+    }
+
+    public function testScoreDetails(): HasMany
+    {
+        return $this->hasMany(TestScoreDetail::class, 'course_id');
     }
 }
