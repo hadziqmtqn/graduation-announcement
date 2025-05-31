@@ -12,8 +12,9 @@ return new class extends Migration {
             $table->uuid('slug');
             $table->unsignedBigInteger('school_year_id');
             $table->unsignedBigInteger('student_id');
-            $table->integer('rank')->nullable();
+            $table->integer('total_score')->default(0);
             $table->float('avg_score')->default(0);
+            $table->integer('rank')->nullable();
             $table->timestamps();
 
             $table->foreign('school_year_id')->references('id')->on('school_years')->restrictOnDelete();

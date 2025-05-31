@@ -14,8 +14,9 @@ class TestScore extends Model
         'slug',
         'school_year_id',
         'student_id',
-        'rank',
+        'total_score',
         'avg_score',
+        'rank',
     ];
 
     protected function casts(): array

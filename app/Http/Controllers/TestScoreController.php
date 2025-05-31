@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TestScore\TestScoreRequest;
 use App\Jobs\TestScore\CreateTestScoreJob;
+use App\Jobs\TestScore\UpdateTestScoreRankJob;
 use App\Models\Course;
 use App\Models\SchoolYear;
 use App\Models\Student;
-use App\Models\TestScore;
 use App\Models\TestScoreDetail;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -52,7 +52,9 @@ class TestScoreController extends Controller
                 'studentId' => $student->id,
                 'examNumber' => $student->exam_number,
                 'fullName' => $student->full_name,
+                'totalScore' => number_format($student->testScore?->total_score, 2, '.', ''),
                 'avgScore' => number_format($student->testScore?->avg_score, 2),
+                'rank' => $student->testScore?->rank,
                 'scores' => $courses->map(function (Course $course) use ($student, $detailMap) {
                     $key = "$student->id:$course->id";
                     return [
@@ -78,6 +80,8 @@ class TestScoreController extends Controller
                     CreateTestScoreJob::dispatch($schoolYear, $student, $courseId, $score);
                 }
             }
+
+            UpdateTestScoreRankJob::dispatch($schoolYear->id);
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return redirect()->back()->with('error', 'Data gagal disimpan!');

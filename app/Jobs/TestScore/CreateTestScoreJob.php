@@ -63,6 +63,7 @@ class CreateTestScoreJob implements ShouldQueue
             $testScoreDetail->score = $this->score;
             $testScoreDetail->save();
 
+            $testScore->total_score = $testScore->testScoreDetails()->sum('score');
             $testScore->avg_score = $testScore->testScoreDetails()->avg('score');
             $testScore->save();
             DB::commit();
