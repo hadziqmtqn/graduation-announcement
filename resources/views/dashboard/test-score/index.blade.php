@@ -7,6 +7,7 @@
     <div class="card mb-3">
         <div class="card-header d-flex align-items-center justify-content-between">
             <h5 class="card-title m-0 me-2">{{ $title }} TA. {{ $schoolYear->year }}</h5>
+            <button type="button" class="btn btn-label-secondary" data-bs-toggle="modal" data-bs-target="#modalGuide">Panduan</button>
         </div>
         @if(count($testScores) > 0)
             <form action="{{ route('test-score.store', $schoolYear->slug) }}" method="post" id="formCreate">
@@ -60,6 +61,7 @@
             </div>
         @endif
     </div>
+    @include('dashboard.test-score.modal-guide')
 @endsection
 
 @section('scripts')
