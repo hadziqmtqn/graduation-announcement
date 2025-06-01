@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Kelulusan | {{ config('app.name') }}</title>
 
@@ -28,6 +29,7 @@
     <link rel="stylesheet" href="{{ url('https://hadziqmtqn.github.io/materialize/assets/css/demo.css') }}" />
     <link rel="stylesheet" href="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/css/pages/front-page.css') }}" />
     <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/libs/sweetalert2/sweetalert2.css') }}" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/css/pages/front-page-help-center.css') }}" />
@@ -112,6 +114,7 @@
 
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
+<script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/libs/jquery/jquery.js') }}"></script>
 <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/libs/popper/popper.js') }}"></script>
 <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/js/bootstrap.js') }}"></script>
 <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/libs/node-waves/node-waves.js') }}"></script>
@@ -119,6 +122,7 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
+<script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/vendor/libs/sweetalert2/sweetalert2.js') }}"></script>
 
 <!-- Main JS -->
 <script src="{{ url('https://hadziqmtqn.github.io/materialize/assets/js/front-main.js') }}"></script>

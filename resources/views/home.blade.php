@@ -18,8 +18,8 @@
                 <form onsubmit="return false" id="form">
                     <div class="input-wrapper my-3 input-group input-group-lg input-group-merge position-relative mx-auto">
                         <span class="input-group-text" id="basic-addon1"><i class="tf-icons mdi mdi-magnify"></i></span>
-                        <input type="text" class="form-control" placeholder="Masukkan Nomor Ujian" aria-label="Nomor Ujian" aria-describedby="basic-addon1" required>
-                        <button type="button" class="btn btn-primary waves-light waves-effect" data-bs-toggle="modal" data-bs-target="#testResultModal">Cari</button>
+                        <input type="text" name="exam_number" class="form-control" placeholder="Masukkan Nomor Ujian" aria-label="Nomor Ujian" aria-describedby="basic-addon1" required>
+                        <button type="button" class="btn btn-primary waves-light waves-effect">Cari</button>
                     </div>
                 </form>
             @endif
@@ -39,11 +39,15 @@
                     <div class="col-12 text-center">
                         <div class="h4 fw-bold mb-0" id="fullName">Nama lengkap</div>
                         <div id="examNumber">0920-20291-2002-10022</div>
-                        <div class="alert alert-success alert-dismissible" style="margin-top: 3rem" role="alert">
-                            <div class="fw-bold h1" style="color: #109854">LULUS</div>
+                        <div class="alert alert-success alert-dismissible" style="margin-top: 3rem; margin-bottom: 3rem" role="alert">
+                            <div class="fw-bold h1 mt-4" style="color: #109854">LULUS</div>
+                            <p>Selamat! Anda telah menyelesaikan pendidikan di <strong>{{ config('app.name') }}</strong>.</p>
+                            <p>Nilai rata-rata Ujian Madrasah Anda <strong id="avgScore">80,99</strong></p>
                         </div>
+                        <p>Pengumuman resmi dari Kepala Sekolah {{ config('app.name') }}</p>
+                        <p id="announcementDate">Tanggal 20 Juni 2025</p>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 text-center">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">Tutup</button>
                     </div>
                 </div>
@@ -54,4 +58,5 @@
 
 @section('script')
     <script src="{{ asset('js/home/countdown-time.js') }}"></script>
+    <script src="{{ asset('js/home/test-result.js') }}"></script>
 @endsection

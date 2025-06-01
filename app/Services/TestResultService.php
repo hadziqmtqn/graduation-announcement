@@ -6,6 +6,7 @@ use App\Http\Requests\Home\TestResultRequest;
 use App\Models\Student;
 use App\Traits\ApiResponse;
 use Exception;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ class TestResultService
     public function testResult(TestResultRequest $request): JsonResponse
     {
         try {
-            $student = Student::with('testScore')
+            $student = Student::with(['testScore', 'schoolYear'])
                 ->whereHas('testScore')
                 ->filterByExamNumber($request->input('exam_number'))
                 ->first();
@@ -36,7 +37,8 @@ class TestResultService
         return $this->apiResponse('Data berhasil ditampilkan', [
             'examNumber' => $student->exam_number,
             'fullName' => $student->full_name,
-            'avgScore' => number_format($student->testScore?->avg_score,2)
+            'avgScore' => number_format($student->testScore?->avg_score,2),
+            'announcementDate' => Carbon::parse($student->schoolYear?->announcement_start_date)->isoFormat('DD MMMM Y')
         ], null, Response::HTTP_OK);
     }
 }
