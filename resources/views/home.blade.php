@@ -110,7 +110,11 @@
 
 <section class="section-py first-section-pt help-center-header">
     <div class="container">
-        <h3 class="text-center mb-2">Pengumuman Kelulusan {{ config('app.name') }}</h3>
+        <div class="text-center">
+            <img src="{{ asset('assets/logo-mikurkid.png') }}" alt="logo" style="width: 150px" class="mb-4">
+        </div>
+        <h1 class="text-center mb-2 fw-bold">PENGUMUMAN KELULUSAN</h1>
+        <h3 class="text-center mb-2">{{ config('app.name') }}</h3>
         <h4 class="text-center mb-2">Tahun Ajaran {{ $schoolYearActive['year'] }}</h4>
         <div data-start-date="{{ $schoolYearActive['announcementStartDate'] }}" data-end-date="{{ $schoolYearActive['announcementEndDate'] }}"></div>
 
