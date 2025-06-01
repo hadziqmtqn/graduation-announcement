@@ -9,7 +9,6 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Yajra\DataTables\Facades\DataTables;
@@ -50,7 +49,7 @@ class SchoolYearController extends Controller
                         });
                     })
                     ->addColumn('year', fn($row) => $row->first_year . '/' . $row->last_year)
-                    ->addColumn('announcementDate', fn($row) => Carbon::parse($row->announcemenet_start_date)->isoFormat('DD MMM Y') . '-' . Carbon::parse($row->announcemenet_end_date)->isoFormat('DD MMM Y'))
+                    ->addColumn('announcementDate', fn($row) => date('d M Y H:i', strtotime($row->announcement_start_date)) . ' s/d ' . date('d M Y H:i', strtotime($row->announcement_end_date)))
                     ->addColumn('is_active', fn($row) => '<span class="badge rounded-pill '. ($row->is_active ? 'bg-primary' : 'bg-danger') .'">'. ($row->is_active ? 'Aktif' : 'Tidak Aktif') .'</span>')
                     ->addColumn('action', function ($row) {
                         return '<a href="'. route('school-year.show', $row->slug) .'" class="btn btn-icon btn-sm btn-warning"><i class="mdi mdi-pencil"></i></a>';

@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const endDateStr = dateDiv.getAttribute('data-end-date');
     const countdownTitle = document.getElementById('countdown-title');
     const countdownDiv = document.getElementById('countdown-timer');
-    const alertDiv = countdownTitle.closest('.alert');
-    if (!countdownTitle || !countdownDiv || !alertDiv) return;
+    if (!countdownTitle || !countdownDiv) return;
 
     function pad(n) { return n < 10 ? '0' + n : n; }
     function formatDuration(ms) {
@@ -27,29 +26,27 @@ document.addEventListener('DOMContentLoaded', function () {
         );
     }
 
+    function setTitle(text, colorClass) {
+        countdownTitle.textContent = text;
+        countdownTitle.className = 'text-center display-6 fw-semibold ' + colorClass;
+    }
+
     function updateCountdown() {
         const now = new Date();
         const startDate = new Date(startDateStr.replace(/-/g, '/'));
         const endDate = new Date(endDateStr.replace(/-/g, '/'));
-        // Reset display
         countdownDiv.style.display = "block";
         if (now < startDate) {
-            countdownTitle.textContent = "Pengumuman akan dimulai dalam:";
+            setTitle("Pengumuman akan dimulai dalam:", "text-danger");
             countdownDiv.innerHTML = formatDuration(startDate - now);
-            alertDiv.classList.remove('alert-primary');
-            alertDiv.classList.add('alert-danger');
         } else if (now >= startDate && now <= endDate) {
-            countdownTitle.textContent = "Silahkan masukkan Nomor Ujian";
+            setTitle("Silahkan masukkan Nomor Ujian", "text-primary");
             countdownDiv.innerHTML = "";
             countdownDiv.style.display = "none";
-            alertDiv.classList.remove('alert-danger');
-            alertDiv.classList.add('alert-primary');
         } else {
-            countdownTitle.textContent = "Pengumuman telah berakhir.";
+            setTitle("Pengumuman telah berakhir.", "text-secondary");
             countdownDiv.innerHTML = "";
             countdownDiv.style.display = "none";
-            alertDiv.classList.remove('alert-primary');
-            alertDiv.classList.add('alert-danger');
         }
     }
     updateCountdown();

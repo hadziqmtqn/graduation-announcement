@@ -6,7 +6,7 @@
     </h4>
     <div class="card mb-3">
         <div class="card-header d-flex align-items-center justify-content-between">
-            <h5 class="card-title m-0 me-2">{{ $title }}</h5>
+            <h5 class="card-title m-0 me-2">{{ $title }} TA. {{ $schoolYear->year }}</h5>
         </div>
         @if(count($testScores) > 0)
             <form action="{{ route('test-score.store', $schoolYear->slug) }}" method="post" id="formCreate">

@@ -81,4 +81,13 @@ class SchoolYear extends Model
 
         return $query->when($search, fn($query) => $query->whereAny(['first_year', 'last_year'], 'like', '%' . $search . '%'));
     }
+
+    public function isOpen(): bool
+    {
+        $today = date('Y-m-d H:i:s');
+        $startDate = date('Y-m-d H:i:s', strtotime($this->announcement_start_date));
+        $endDate = date('Y-m-d H:i:s', strtotime($this->announcement_end_date));
+
+        return $this->is_active && $today >= $startDate && $today <= $endDate;
+    }
 }

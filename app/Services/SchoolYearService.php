@@ -34,10 +34,9 @@ class SchoolYearService
             'id' => $schoolYear?->id,
             'slug' => $schoolYear?->slug,
             'year' => $schoolYear?->year,
-            'announcementStartDate' => $schoolYear ? Carbon::parse($schoolYear->announcement_start_date)->isoFormat('DD MMM Y') : null,
-            'announcementEndDate' => $schoolYear ? Carbon::parse($schoolYear->announcement_end_date)->isoFormat('DD MMM Y') : null,
-            'announcementStartDateFormated' => $schoolYear ? date('Y-m-d H:i:s', strtotime($schoolYear->announcement_start_date)) : null,
-            'announcementEndDateFormated' => $schoolYear ? date('Y-m-d H:i:s', strtotime($schoolYear->announcement_end_date)) : null,
+            'announcementStartDate' => $schoolYear ? date('Y-m-d H:i:s', strtotime($schoolYear->announcement_start_date)) : null,
+            'announcementEndDate' => $schoolYear ? date('Y-m-d H:i:s', strtotime($schoolYear->announcement_end_date)) : null,
+            'announcementIsOpen' => $schoolYear?->isOpen()
         ]);
     }
 
