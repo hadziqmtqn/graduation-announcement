@@ -102,7 +102,7 @@
 
             <!-- navbar button: Start -->
             <li>
-                <a href="{{ route('login') }}" class="btn btn-primary px-2 px-sm-4 px-lg-2 px-xl-4 waves-effect waves-light" target="_blank"><span class="tf-icons mdi mdi-account me-md-1"></span><span class="d-none d-md-block">Login</span></a>
+                <a href="{{ route('login') }}" class="btn btn-primary px-2 px-sm-4 px-lg-2 px-xl-4 waves-effect waves-light"><span class="tf-icons mdi mdi-account me-md-1"></span><span class="d-none d-md-block">Login</span></a>
             </li>
             <!-- navbar button: End -->
         </ul>
