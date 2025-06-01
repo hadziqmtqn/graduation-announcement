@@ -10,6 +10,7 @@ use App\Http\Controllers\TestScoreController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::post('/test-result', [HomeController::class, 'testResult']);
 
 Route::middleware('guest')->group(function () {
     Route::prefix('login')->group(function () {

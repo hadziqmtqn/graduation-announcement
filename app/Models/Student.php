@@ -63,4 +63,10 @@ class Student extends Model
         return $query->when($search, fn($query) => $query->whereLike('full_name', 'like', '%' . $search . '%'))
             ->where('school_year_id', $schoolYearId);
     }
+
+    #[Scope]
+    protected function filterByExamNumber(Builder $query, $examNumber): Builder
+    {
+        return $query->where('exam_number', $examNumber);
+    }
 }

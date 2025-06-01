@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setTitle("Pengumuman akan dimulai dalam:", "text-danger");
             countdownDiv.innerHTML = formatDuration(startDate - now);
         } else if (now >= startDate && now <= endDate) {
-            setTitle("Silahkan masukkan Nomor Ujian", "text-primary");
+            setTitle("Masukkan Nomor Ujian untuk melihat hasil kelulusan", "text-primary");
             countdownDiv.innerHTML = "";
             countdownDiv.style.display = "none";
         } else {
