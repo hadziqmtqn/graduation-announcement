@@ -1,23 +1,23 @@
 #!/bin/sh
 set -e
 
-# If there are supervisor confs in the repo, copy them into system path
-if [ -d /code/docker/supervisor ]; then
-  mkdir -p /etc/supervisor/conf.d
-  cp -v /code/docker/supervisor/*.conf /etc/supervisor/conf.d/ || true
-fi
+# Fix permissions for storage and bootstrap/cache to ensure www-data can write
+# This handles cases where files are created with root ownership (e.g., view compilation)
+echo "🔧 Fixing storage permissions..."
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+find /var/www/html/storage /var/www/html/bootstrap/cache -type d -exec chmod 775 {} +
+find /var/www/html/storage /var/www/html/bootstrap/cache -type f -exec chmod 664 {} +
 
-# Ensure supervisord log dir exists and has sensible permissions
-mkdir -p /var/log/supervisor
-chown root:root /var/log/supervisor
-chmod 755 /var/log/supervisor
+# Run Laravel optimizations
+echo "🚀 Running Laravel optimizations..."
+gosu www-data php artisan optimize
 
-# Ensure Laravel writable dirs are owned by www-data
-chown -R www-data:www-data /code/storage /code/bootstrap/cache || true
-chmod -R 775 /code/storage /code/bootstrap/cache || true
+# Fix permissions again after optimize (views might be compiled as root)
+echo "🔧 Fixing permissions after optimize..."
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+find /var/www/html/storage /var/www/html/bootstrap/cache -type d -exec chmod 775 {} +
+find /var/www/html/storage /var/www/html/bootstrap/cache -type f -exec chmod 664 {} +
 
-# Optional: ensure /code/vendor readable (usually ok)
-chmod -R a+r /code/vendor || true
-
-# Exec the container CMD (so CMD becomes the main process)
+# Execute the CMD
+echo "🎬 Starting Supervisor..."
 exec "$@"

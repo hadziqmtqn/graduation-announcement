@@ -1,23 +1,19 @@
-- Docker menggunakan EasyPanel
-- Jalankan lewat terminal setelah rebuild image docker
-- Ubah <code>bkn-project_spmb-2.1.ct4e2cydgqakj26yknvwllsd5</code> dengan nama container service
+# Docker Configuration for EasyPanel
 
-```bash
+Folder ini berisi file pendukung untuk deploy aplikasi ke EasyPanel menggunakan setup **PHP-FPM + Caddy Server**.
 
-cat <<'EOF' | docker exec -i bkn-project_spmb-2.1.ct4e2cydgqakj26yknvwllsd5 tee /etc/supervisor/conf.d/queue-worker.conf > /dev/null
-[program:laravel-queue-worker]
-command=/usr/bin/php /code/artisan queue:work --queue=default --sleep=3 --tries=3 --timeout=60 --memory=128
-directory=/code
-autostart=true
-autorestart=true
-startsecs=5
-startretries=3
-user=www-data
-redirect_stderr=true
-stdout_logfile=/var/log/supervisor/queue-worker.log
-stderr_logfile=/var/log/supervisor/queue-worker.err
-stopwaitsecs=360
-stopasgroup=true
-killasgroup=true
-EOF
-```
+## Struktur File Utama
+- **`Dockerfile.easypanel.frankenphp`**: File utama untuk build Docker image. Menggunakan Alpine Linux yang ringan dan Supervisor untuk manajemen proses.
+- **`docker/Caddyfile.easypanel.phpfpm`**: Konfigurasi Caddy Web Server yang dioptimalkan untuk Laravel.
+
+## Fitur Setup Ini
+1. **Multi-Process Management**: Menggunakan Supervisor untuk menjalankan dan memantau:
+   - PHP-FPM (Proses PHP)
+   - Caddy Server (Web Server)
+   - Laravel Queue Worker (Pemroses antrian)
+2. **Auto-Recovery**: Jika ada layanan (PHP/Caddy/Worker) yang mati, Supervisor akan otomatis menjalankannya kembali.
+3. **Optimized Logging**: Semua log (akses web, error PHP, dan queue worker) langsung diteruskan ke log standar EasyPanel sehingga mudah dipantau.
+4. **Queue Worker**: Sudah menyertakan worker untuk antrian `high` dan `default`.
+
+## Cara Update Konfigurasi Antrian (Queue)
+Jika Anda ingin mengubah konfigurasi Queue Worker, Anda dapat mengubah baris `[program:laravel-worker]` di dalam file `Dockerfile.easypanel.frankenphp`.
